@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>児童登録ページ</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+    <header class="header-logo">
+        <div>児童登録ページ</div>
+    </header>
+    <p>登録情報</p>
+    <div>
+	    <form action="/register_stu" method="POST">
+            <p>ログインID：<input type="text" class="input" name="user_id">
+            </p>
+            <p>　　　名前：<input type="text" class="input" name="user_name">
+            </p>
+            <p>パスワード：<input type="password" class="input" name="password">
+            </p>
+            <input type="submit" class="add" value="登録">
+	    </form>
+    </div>
+    <div>
+        <table border="1" class="student">
+            <tr>
+                <th>ログインID</th><th>名前</th><th>パスワード</th>
+            </tr>
+            {% for item in user_list %}
+            <tr>
+                <td>{{item["user_id"]}}</td>
+                <td>{{item["user_name"]}}</td>
+                <td>{{item["password_stu"]}}</td>
+                <td><a href="/del/{{item['user_number']}}">削除</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+        <br>
+        <button class="add" onclick="location.href='/select'">
+        トップページに戻る
+    </button>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>らく連 ログインページ</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+    <header class="header-logo">
+        <div>らくらく連絡帳</div>
+    </header>
+    <div id="message">
+        <p>今日も一日お疲れ様です♪</p>
+        <img src="./static/img/icon2.png" alt="">
+    </div>
+    <form action="login" method="POST">
+<!--    <div class="login"> -->
+        <div id="c_login">
+            <p>児童のログインページ</p>
+            <input type="text" class="input" placeholder="ID" name="user_id_stu">
+            <input type="password" class="input" placeholder="パスワード" name="password_stu">
+            <input type="submit" class="add" value="ログイン">
+        </div>
+    </form>
+    <form action="login" method="POST">
+        <div id="s_login">
+            <p>先生のログインページ</p>
+            <input type="text" class="input" placeholder="ID" name="user_id">
+            <input type="password" class="input" placeholder="パスワード" name="password">
+            <input type="submit" class="add" value="ログイン">
+            <a href="/register">新規登録</a>
+        </div>
+    </form>
+<!--    </div> -->
+    <div>
+        <img src="./static/img/login_child.jpg" class="top-pic" alt="子どもの写真サンプル">
+    </div>
+
+</body>
+</html>

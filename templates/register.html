@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<body>
+    <header class="header-logo">
+        <div>先生新規登録ページ</div>
+    </header>
+    <div>
+    <form action="/register" method="post">
+        <p>　　　名前：<input type="text" class="input" name="user_name">
+        </p>
+        <p>ユーザーID：<input type="text" class="input" name="user_id">
+        </p>
+<!--        <p>パスワード：<input type="text" class="input"> 
+        </p> -->
+        <p>パスワード：<input type="password" class="input" name="password"> 
+        </p>        
+        <input type="submit" value="会員登録" class="add">
+    </form>
+    </div>
+    
+</body>
+</html>

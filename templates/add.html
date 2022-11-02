@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rakuren.add</title>
+    <link rel="stylesheet" href="./static/css/style.css">
+</head>
+<header>
+    <div class="header-logo">連絡帳新規追加</div>
+</header>
+<body>
+    <form action="/add" method="POST">
+<!--        <p>日付 :</p> -->
+
+        <p>生徒名 :<input class="input" type="text"  name="name" size="40"></p>
+        
+        <div>
+            <a>体調 :</a>
+            <input type="radio" id="good" name="drone" value="good"
+                    checked>
+            <label for="good">健康</label>
+            <input type="radio" id="etc" name="drone" value="etc">
+            <label for="ect">その他 :</label>
+            <input class="input" type="text"  name="etc">
+        </div>
+        
+        <p>給食 : <input type="text" class="input" name="school_lunch" size="40"></p>
+
+        <p>今日の様子<br>
+            <textarea class="textline" placeholder="いつ、なにをしたか、どんな様子だったか。今日の良かった事や、頑張っている様子をわかりやすく伝えたり、悪いことは伝えすぎないように書き方を工夫する。" cols="50" rows="10" name="learning" ></textarea></p>
+
+        <p>明日の持ち物<br>
+            <textarea class="textline" cols="50" rows="10" name="mochimono"></textarea></p>
+
+
+<!--            <button class="add" type="button">追加</button> -->
+        <input type="submit" class="add" value="追加">
+    </form>
+</body>
+</html>

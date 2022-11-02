@@ -1,0 +1,130 @@
+@charset "UTF-8";
+html {
+	overflow-y: scroll; /* IEへの対応 http://www.htmq.com/style/overflow-y.shtml */
+	/*Internet Explorerが独自に追加したプロパティ*/
+	/*画面に収まりきれなかったときにスクロールして表示することを許可するか否か*/
+}
+/* リセットおまじない--------------------------------- */
+
+body, h1, h2, h3, h4, h5, p, ul, ol, li, dl, dt, dd {
+	margin: 30px;
+	padding: 0px;
+}
+
+body {
+	background: rgb(254, 247, 213);
+	color: rgb(34, 202, 182);
+	text-align: center;
+	font-size: 25px;
+	line-height: 1.4;
+	min-width: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	font-family: "Noto Sans Japanese", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "游ゴシック", YuGothic, "メイリオ", "Meiryo", "HGPｺﾞｼｯｸM", "Osaka", "ＭＳ Ｐゴシック", sans-serif, Century Gothic, Arial;
+}
+
+.header-logo{
+	font-size: 50px;
+	color: rgb(223, 129, 162);
+}
+
+.top-pic {
+    width: 400px;
+    height: 300px;
+    margin: 30px;
+}
+
+.add {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgb(223, 129, 162);
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.add:hover {
+    background-color: rgb(222, 87, 134);
+}
+
+.add:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+.top {
+    border: 0;
+    line-height: 2.5;
+    padding: 0 50px;
+	margin: 30px;
+    font-size: 1rem;
+    text-align: center;
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    border-radius: 10px;
+    background-color: rgb(104, 207, 195);
+    background-image: linear-gradient(to top left,
+                                      rgba(0, 0, 0, .2),
+                                      rgba(0, 0, 0, .2) 30%,
+                                      rgba(0, 0, 0, 0));
+    box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .6),
+                inset -2px -2px 3px rgba(0, 0, 0, .6);
+}
+
+.top:hover {
+    background-color: rgb(57, 205, 188);
+}
+
+.top:active {
+    box-shadow: inset -2px -2px 3px rgba(255, 255, 255, .6),
+                inset 2px 2px 3px rgba(0, 0, 0, .6);
+}
+
+.input{
+    font-size: 15px;
+    box-sizing: border-box;
+    margin: 1em 0;
+    padding: .8em;
+    border-radius: 1em;
+    border: 2px solid rgb(223, 129, 162);
+}
+
+.input:focus{
+    border-color: rgb(223, 129, 162);   /* 枠線の色 */
+    background-color: rgb(253, 253, 250);  /* 背景色 */
+    outline: none;  
+}
+
+.textline {
+    font-size: 20px;
+    box-sizing: border-box;
+    margin: 1em 0;
+    padding: .8em;
+    border-radius: 1em;
+    border: 2px solid rgb(223, 129, 162);
+  }
+
+.textline:focus {
+    border-color: rgb(223, 129, 162);   /* 枠線の色 */
+    background-color: rgb(253, 253, 250);  /* 背景色 */
+    outline: none;           /* ※ブラウザが標準で付加する線を消したいとき */
+}
+
+.student {
+    background-color: rgb(253, 253, 250);
+    width: 600px;
+    margin: auto;
+    margin-top: 30px;
+    border: 2px solid rgb(223, 129, 162);
+}
