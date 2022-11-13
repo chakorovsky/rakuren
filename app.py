@@ -1,5 +1,9 @@
 # splite3をimportする
+from contextlib import redirect_stderr
+from pydoc import pager
 import sqlite3
+from tkinter import E
+from turtle import title
 # flaskをimportしてflaskを使えるようにする
 from flask import Flask , render_template , request , redirect , session
 from datetime import datetime
@@ -13,49 +17,51 @@ app.secret_key = 'sunabakoza'
 def index():
     return render_template('/login.html')
 
+
+
 # GET  /login => ログイン画面を表示
 # POST /login => ログイン処理をする
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "GET":
-        #先生のログイン
-        if 'session_id' in session:
-            return redirect("/select")
-        else:
-            return render_template("login.html")
-    else:
-        # ブラウザから送られてきたデータを受け取る
-        user_id = request.form.get("user_id")
-        password = request.form.get("password")
-        user_id_stu = request.form.get("user_id_stu")
-        password_stu = request.form.get("password_stu")
+# @app.route("/login", methods=["GET", "POST"])
+# def login():
+#     if request.method == "GET":
+#         #先生のログイン
+#         if 'session_id' in session:
+#             return redirect("/select")
+#         else:
+#             return render_template("login.html")
+#     else:
+#         # ブラウザから送られてきたデータを受け取る
+#         user_id = request.form.get("user_id")
+#         password = request.form.get("password")
+#         user_id_stu = request.form.get("user_id_stu")
+#         password_stu = request.form.get("password_stu")
 
-        # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
-        if user_id_stu is None:
-            conn = sqlite3.connect('rakuren.db')
-            c = conn.cursor()
-            c.execute("SELECT user_id FROM teacher WHERE user_id = ? AND password = ?", (user_id, password))
-            print('ログイン')
-            session_id = c.fetchone()
-            conn.close()
-        else:
-            conn = sqlite3.connect('rakuren.db')
-            c = conn.cursor()
-            c.execute("SELECT user_id FROM student WHERE user_id = ? AND password = ?", (user_id_stu, password_stu))
-            print('ログイン')
-            session_id = c.fetchone()
-            conn.close()
+#         # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
+#         if user_id_stu is None:
+#             conn = sqlite3.connect('rakuren.db')
+#             c = conn.cursor()
+#             c.execute("SELECT user_id FROM teacher WHERE user_id = ? AND password = ?", (user_id, password))
+#             print('ログイン')
+#             session_id = c.fetchone()
+#             conn.close()
+#         else:
+#             conn = sqlite3.connect('rakuren.db')
+#             c = conn.cursor()
+#             c.execute("SELECT user_id FROM student WHERE user_id = ? AND password = ?", (user_id_stu, password_stu))
+#             print('ログイン')
+#             session_id = c.fetchone()
+#             conn.close()
 
-        # session_id が NULL(PythonではNone)じゃなければログイン成功
-        if session_id is None:
-            # ログイン失敗すると、ログイン画面に戻す
-            return render_template("login.html")
-        else:
-            if user_id_stu is None:
-                session['session_id'] = user_id
-                return redirect("/select")
-            else:
-                session['session_id'] = user_id_stu
+#         # session_id が NULL(PythonではNone)じゃなければログイン成功
+#         if session_id is None:
+#             # ログイン失敗すると、ログイン画面に戻す
+#             return render_template("login.html")
+#         else:
+#             if user_id_stu is None:
+#                 session['session_id'] = user_id
+#                 return redirect("/select")
+#             else:
+#                 session['session_id'] = user_id_stu
 #ここあとでやる
 #                conn = sqlite3.connect('rakuren.db')
 #                c = conn.cursor()
@@ -64,7 +70,7 @@ def login():
 #                for row in c.fetchall():
 #                comment_list.append({"id": row[0], "comment": row[1], "time": row[2]})
 #                c.close()
-                return redirect("/top")
+#                return redirect("/top")
                 
 @app.route("/logout")
 def logout():
