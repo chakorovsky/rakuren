@@ -13,9 +13,9 @@ app = Flask(__name__)
 # Flask では標準で Flask.secret_key を設定すると、sessionを使うことができます。この時、Flask では session の内容を署名付きで Cookie に保存します。
 app.secret_key = 'sunabakoza'
 
-# @app.route('/')
-# def index():
-#     return render_template('/login.html')
+@app.route('/')
+def index():
+    return render_template('/login.html')
 
 @app.route("/login", methods=["GET"])
 def login_post():
