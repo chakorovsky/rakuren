@@ -13,10 +13,49 @@ app = Flask(__name__)
 # Flask では標準で Flask.secret_key を設定すると、sessionを使うことができます。この時、Flask では session の内容を署名付きで Cookie に保存します。
 app.secret_key = 'sunabakoza'
 
-@app.route('/')
-def index():
-    return render_template('/login.html')
+# @app.route('/')
+# def index():
+#     return render_template('/login.html')
 
+@app.route("/login", methods=["GET"])
+def login_post():
+    if 'session_id' in session:
+        return redirect("/top")
+    else:
+        return render_template("student_login.html")
+
+@app.route("/student_login", methods=["POST"])
+def teacher_login_post():
+    # ブラウザから送られてきたデータを受け取る
+    user_id_stu = request.form.get("user_id_stu")
+    password_stu = request.form.get("password_stu")
+    conn = sqlite3.connect('rakuren.db')
+    c = conn.cursor()
+    c.execute("SELECT user_id_stu FROM student WHERE user_id = ? AND password = ?", (user_id_stu, password_stu))
+    session_id = c.fetchone()
+    conn.close()
+    session["user_id_stu"] = session_id
+    return redirect("/top")
+
+@app.route("/login", methods=["GET"])
+def login_post():
+    if 'session_id' in session:
+        return redirect("/select")
+    else:
+        return render_template("teather_login.html")
+
+@app.route("/teacher_login", methods=["POST"])
+def teacher_login_post():
+    # ブラウザから送られてきたデータを受け取る
+    user_id = request.form.get("user_id")
+    password = request.form.get("password")
+    conn = sqlite3.connect('rakuren.db')
+    c = conn.cursor()
+    c.execute("SELECT user_id FROM teacher WHERE user_id = ? AND password = ?", (user_id, password))
+    session_id = c.fetchone()
+    conn.close()
+    session["user_id"] = session_id
+    return redirect("/select")
 
 
 # GET  /login => ログイン画面を表示
@@ -37,13 +76,7 @@ def index():
 #         password_stu = request.form.get("password_stu")
 
 #         # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
-#         if user_id_stu is None:
-#             conn = sqlite3.connect('rakuren.db')
-#             c = conn.cursor()
-#             c.execute("SELECT user_id FROM teacher WHERE user_id = ? AND password = ?", (user_id, password))
-#             print('ログイン')
-#             session_id = c.fetchone()
-#             conn.close()
+#         
 #         else:
 #             conn = sqlite3.connect('rakuren.db')
 #             c = conn.cursor()
@@ -62,15 +95,7 @@ def index():
 #                 return redirect("/select")
 #             else:
 #                 session['session_id'] = user_id_stu
-#ここあとでやる
-#                conn = sqlite3.connect('rakuren.db')
-#                c = conn.cursor()
-#                c.execute("SELECT id,comment,time from bbs where userid = ? AND deleteFlag = 0 order by id", (session_id,))
-#                comment_list = []
-#                for row in c.fetchall():
-#                comment_list.append({"id": row[0], "comment": row[1], "time": row[2]})
-#                c.close()
-#                return redirect("/top")
+#                 return redirect("/top")
                 
 @app.route("/logout")
 def logout():
