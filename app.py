@@ -1,6 +1,4 @@
 # splite3をimportする
-from msilib.schema import Condition
-from re import A
 import sqlite3
 # flaskをimportしてflaskを使えるようにする
 from flask import Flask , render_template , request , redirect , session
