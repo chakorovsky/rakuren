@@ -1,9 +1,7 @@
 # splite3をimportする
-from contextlib import redirect_stderr
-from pydoc import pager
+from msilib.schema import Condition
+from re import A
 import sqlite3
-from tkinter import E
-from turtle import title
 # flaskをimportしてflaskを使えるようにする
 from flask import Flask , render_template , request , redirect , session
 from datetime import datetime
@@ -17,85 +15,58 @@ app.secret_key = 'sunabakoza'
 def index():
     return render_template('/login.html')
 
-@app.route("/login", methods=["GET"])
-def login_post():
-    if 'session_id' in session:
-        return redirect("/top")
-    else:
-        return render_template("student_login.html")
-
-@app.route("/student_login", methods=["POST"])
-def teacher_login_post():
-    # ブラウザから送られてきたデータを受け取る
-    user_id_stu = request.form.get("user_id_stu")
-    password_stu = request.form.get("password_stu")
-    conn = sqlite3.connect('rakuren.db')
-    c = conn.cursor()
-    c.execute("SELECT user_id_stu FROM student WHERE user_id = ? AND password = ?", (user_id_stu, password_stu))
-    session_id = c.fetchone()
-    conn.close()
-    session["user_id_stu"] = session_id
-    return redirect("/top")
-
-@app.route("/login", methods=["GET"])
-def login_post():
-    if 'session_id' in session:
-        return redirect("/select")
-    else:
-        return render_template("teather_login.html")
-
-@app.route("/teacher_login", methods=["POST"])
-def teacher_login_post():
-    # ブラウザから送られてきたデータを受け取る
-    user_id = request.form.get("user_id")
-    password = request.form.get("password")
-    conn = sqlite3.connect('rakuren.db')
-    c = conn.cursor()
-    c.execute("SELECT user_id FROM teacher WHERE user_id = ? AND password = ?", (user_id, password))
-    session_id = c.fetchone()
-    conn.close()
-    session["user_id"] = session_id
-    return redirect("/select")
-
-
 # GET  /login => ログイン画面を表示
 # POST /login => ログイン処理をする
-# @app.route("/login", methods=["GET", "POST"])
-# def login():
-#     if request.method == "GET":
-#         #先生のログイン
-#         if 'session_id' in session:
-#             return redirect("/select")
-#         else:
-#             return render_template("login.html")
-#     else:
-#         # ブラウザから送られてきたデータを受け取る
-#         user_id = request.form.get("user_id")
-#         password = request.form.get("password")
-#         user_id_stu = request.form.get("user_id_stu")
-#         password_stu = request.form.get("password_stu")
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "GET":
+        #先生のログイン
+        if 'session_id' in session:
+            return redirect("/select")
+        else:
+            return render_template("login.html")
+    else:
+        # ブラウザから送られてきたデータを受け取る
+        user_id = request.form.get("user_id")
+        password = request.form.get("password")
+        user_id_stu = request.form.get("user_id_stu")
+        password_stu = request.form.get("password_stu")
 
-#         # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
-#         
-#         else:
-#             conn = sqlite3.connect('rakuren.db')
-#             c = conn.cursor()
-#             c.execute("SELECT user_id FROM student WHERE user_id = ? AND password = ?", (user_id_stu, password_stu))
-#             print('ログイン')
-#             session_id = c.fetchone()
-#             conn.close()
+        # 存在するかを判定する。レコードが存在するとuser_idに整数が代入、存在しなければ nullが入る
+        if user_id_stu is None:
+            conn = sqlite3.connect('rakuren.db')
+            c = conn.cursor()
+            c.execute("SELECT user_id FROM teacher WHERE user_id = ? AND password = ?", (user_id, password))
+            print('ログイン')
+            session_id = c.fetchone()
+            conn.close()
+        else:
+            conn = sqlite3.connect('rakuren.db')
+            c = conn.cursor()
+            c.execute("SELECT user_id FROM student WHERE user_id = ? AND password = ?", (user_id_stu, password_stu))
+            print('ログイン')
+            session_id = c.fetchone()
+            conn.close()
 
-#         # session_id が NULL(PythonではNone)じゃなければログイン成功
-#         if session_id is None:
-#             # ログイン失敗すると、ログイン画面に戻す
-#             return render_template("login.html")
-#         else:
-#             if user_id_stu is None:
-#                 session['session_id'] = user_id
-#                 return redirect("/select")
-#             else:
-#                 session['session_id'] = user_id_stu
-#                 return redirect("/top")
+        # session_id が NULL(PythonではNone)じゃなければログイン成功
+        if session_id is None:
+            # ログイン失敗すると、ログイン画面に戻す
+            return render_template("login.html")
+        else:
+            if user_id_stu is None:
+                session['session_id'] = user_id
+                return redirect("/select")
+            else:
+                session['session_id'] = user_id_stu
+#ここあとでやる
+#                conn = sqlite3.connect('rakuren.db')
+#                c = conn.cursor()
+#                c.execute("SELECT id,comment,time from bbs where userid = ? AND deleteFlag = 0 order by id", (session_id,))
+#                comment_list = []
+#                for row in c.fetchall():
+#                comment_list.append({"id": row[0], "comment": row[1], "time": row[2]})
+#                c.close()
+                return redirect("/top")
                 
 @app.route("/logout")
 def logout():
@@ -218,13 +189,13 @@ def add_post():
         session_id = session["session_id"][0]
         # フォームから入力されたアイテム名の取得
         time = datetime.now()
-        time = time.strftime('%Y/%m/%d %H:%M:%S')
+        time = time.strftime('%Y/%m/%d')
         student_id = "yamada"
-        student_name = "山田"
+        student_name = "山田 太郎"
 #        condition = request.form.get("user_id")
 #        condition_add = request.form.get("user_id")
-        condition = "健康"
-        condition_add = "元気です"
+        condition = request.form.get("condition")
+        condition_add = request.form.get("condition_add")
         learning = request.form.get("learning")
         mochimono = request.form.get("mochimono")
         school_lunch = request.form.get("school_lunch")
@@ -270,4 +241,4 @@ def notfound404(code):
 # __name__ というのは、自動的に定義される変数で、現在のファイル(モジュール)名が入ります。 ファイルをスクリプトとして直接実行した場合、 __name__ は __main__ になります。
 if __name__ == "__main__":
     # Flask が持っている開発用サーバーを、実行します。
-    app.run(debug=False)
+    app.run(debug=True)
